@@ -1,11 +1,20 @@
 public class Main {
 
-  public static void main(String[] args) {
-    int height = 4;
-    byte[] x = {1,2,3};
-    State s = new State(x, height);
+  static byte size = 8;
+  static State finalState;
+  static State[] open;
+  static State[] closed;
 
-    System.out.println(s.getHeight());
+  public static void main(String[] args) {
+    int height = 0;
+    byte[] finalStateArr = {1,2,3,4,5,6,7,0};
+    finalState = new State(finalStateArr, height);
+
+    open = new State[999]; // What should this number be?
+    closed = new State[999]; // What should this number be?
+
+    System.out.println(finalState.getHeur());
+
   }
 
 }
