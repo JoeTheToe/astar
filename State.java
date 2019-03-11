@@ -1,14 +1,14 @@
 public class State {
 
-  byte stateArr[];
+  byte[] stateArr;
   int height;
 
-  public State (byte arr[], int height) {
-    this.arr = stateArr[];
+  public State (byte[] arr, int height) {
+    this.stateArr = arr;
     this.height = height;
   }
 
-  public int getHeight(State s) {
+  public int getHeight() {
     return this.height;
   }
 }
