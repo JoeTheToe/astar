@@ -18,7 +18,7 @@ public class Main {
     boolean validEndState = false;
     boolean contains = false;
 
-    // validate input
+    // Input validation
     while(!validStartState) {
     	String input = JOptionPane.showInputDialog("Enter start state, 9 unique numbers from 0 to 8 seperated by a space");
     	String[] inputArr = input.split("\\s+");
@@ -40,7 +40,6 @@ public class Main {
     	}
     }
     
-    // validate output
     while(!validEndState) {
     	String input = JOptionPane.showInputDialog("Enter end/final state, 9 unique numbers from 0 to 8 seperated by a space");
     	String[] inputArr = input.split("\\s+");
