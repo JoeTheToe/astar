@@ -1,15 +1,14 @@
-import java.util.stream.IntStream;
-
 import javax.swing.JOptionPane;
 
 public class Main {
 
 	static byte size = 8;
 	static State finalState;
+	static State startState;
 	static State[] open;
 	static State[] closed;
-	static int[] inputStateArr = new int[9];
-	static int[] finalStateArr = new int[9];
+	static byte[] inputStateArr = new byte[9];
+	static byte[] finalStateArr = new byte[9];
 
 	public static void main(String[] args) {
 		int height = 0;
@@ -22,14 +21,19 @@ public class Main {
 						.showInputDialog("Enter start state, 9 unique numbers from 0 to 8 seperated by a space");
 				validStartState = validateInput(start, inputStateArr);
 			}
+			
+			for (int j = 0; j < inputStateArr.length; j++) {
+				System.out.println(inputStateArr[j]);
+				}
 			if (!validEndState) {
 				String end = JOptionPane
 						.showInputDialog("Enter end/final state, 9 unique numbers from 0 to 8 seperated by a space");
 				validEndState = validateInput(end, finalStateArr);
 			}
 		}
-
-		// finalState = new State(finalStateArr, height);
+		
+		startState = new State(inputStateArr, height);
+		finalState = new State(finalStateArr, height);
 		open = new State[999]; // What should this number be?
 		closed = new State[999]; // What should this number be?
 
@@ -37,7 +41,7 @@ public class Main {
 
 	}
 
-	public static boolean validateInput(String input, int[] stateArr) {
+	public static boolean validateInput(String input, byte[] stateArr) {
 		boolean valid = false;
 		boolean duplicate = false;
 		String inputValidator = "([0-8]\\s){8}[0-8]";
@@ -45,7 +49,7 @@ public class Main {
 		String[] inputArr = input.split("\\s+");
 
 		for (int i = 0; i < inputArr.length; i++) {
-			stateArr[i] = Integer.parseInt(inputArr[i]);
+			stateArr[i] = Byte.parseByte(inputArr[i]);
 		}
 
 		for (int j = 0; j < stateArr.length && !duplicate; j++) {
