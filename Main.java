@@ -16,26 +16,32 @@ public class Main {
 		boolean validEndState = false;
 
 		while (!validStartState && !validEndState) {
-			if (!validStartState) {
-				String start = JOptionPane
-						.showInputDialog("Enter start state, 9 unique numbers from 0 to 8 seperated by a space");
-				validStartState = validateInput(start, inputStateArr);
-			}
-			
-			for (int j = 0; j < inputStateArr.length; j++) {
-				System.out.println(inputStateArr[j]);
+			try {
+				if (!validStartState) {
+					String start = JOptionPane
+							.showInputDialog("Enter start state, 9 unique numbers from 0 to 8 seperated by a space");
+					validStartState = validateInput(start, inputStateArr);
 				}
-			if (!validEndState) {
-				String end = JOptionPane
-						.showInputDialog("Enter end/final state, 9 unique numbers from 0 to 8 seperated by a space");
-				validEndState = validateInput(end, finalStateArr);
+
+				for (int j = 0; j < inputStateArr.length; j++) {
+					System.out.println(inputStateArr[j]);
+				}
+				if (!validEndState) {
+					String end = JOptionPane.showInputDialog(
+							"Enter end/final state, 9 unique numbers from 0 to 8 seperated by a space");
+					validEndState = validateInput(end, finalStateArr);
+				}
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "Incorrect input");
 			}
 		}
-		
+
 		startState = new State(inputStateArr, height);
 		finalState = new State(finalStateArr, height);
-		open = new State[999]; // What should this number be? Not sure but maybe an arraylist here would be better if we don't know the size
-		closed = new State[999]; // What should this number be? Not sure but maybe an arraylist here would be better if we don't know the size
+		open = new State[999]; // What should this number be? Not sure but maybe an arraylist here would be
+								// better if we don't know the size
+		closed = new State[999]; // What should this number be? Not sure but maybe an arraylist here would be
+									// better if we don't know the size
 
 		System.out.println(finalState.getHeur());
 
