@@ -42,7 +42,8 @@ public class Main {
 								// better if we don't know the size
 		closed = new State[999]; // What should this number be? Not sure but maybe an arraylist here would be
 									// better if we don't know the size
-
+		byte[] moves = startState.getMoves();
+		print(moves);
 		System.out.println(finalState.getHeur());
 
 	}
@@ -73,5 +74,15 @@ public class Main {
 
 		return valid;
 	}
+	
+	public static void print(byte[] moves){
+		String[] directions = {"West","East","South","North"};
+		
+		for(int i = 0; i < directions.length; i++){
+			if(moves[i] > 0){
+				System.out.println(moves[i] + " to the " + directions[i]);
+			}
+		}  
+  }
 
 }
