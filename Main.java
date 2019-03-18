@@ -34,8 +34,8 @@ public class Main {
 		
 		startState = new State(inputStateArr, height);
 		finalState = new State(finalStateArr, height);
-		open = new State[999]; // What should this number be?
-		closed = new State[999]; // What should this number be?
+		open = new State[999]; // What should this number be? Not sure but maybe an arraylist here would be better if we don't know the size
+		closed = new State[999]; // What should this number be? Not sure but maybe an arraylist here would be better if we don't know the size
 
 		System.out.println(finalState.getHeur());
 
