@@ -31,7 +31,7 @@ public class Main {
 							"Enter end/final state, 9 unique numbers from 0 to 8 seperated by a space");
 					validEndState = validateInput(end, finalStateArr);
 				}
-			} catch (NumberFormatException e) {
+			} catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
 				JOptionPane.showMessageDialog(null, "Incorrect input");
 			}
 		}
@@ -51,7 +51,7 @@ public class Main {
 	public static boolean validateInput(String input, byte[] stateArr) {
 		boolean valid = false;
 		boolean duplicate = false;
-		String inputValidator = "([0-8]\\s){8}[0-8]";
+		String inputValidator = "([0-8]\\s){8}[0-8]{1}";
 
 		String[] inputArr = input.split("\\s+");
 
