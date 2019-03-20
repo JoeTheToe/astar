@@ -12,13 +12,18 @@ public class State {
     return this.height;
   }
 
-  public int getHeur() {
+  public int getHeur(State endState) {
     byte amntOutOfPlace = 0;
-    // Check up to second last index if any out of amntOutOfPlace
-    // Last value will be 0 so no need to check
+    byte[] startArr = this.stateArr;
+    byte[] endArr = endState.stateArr;
+
     for (int i = 0; i < (this.stateArr).length - 1; i++) {
-      if (this.stateArr[i] != i+1) {
-        amntOutOfPlace++;
+      if (endArr[i] != startArr[i]) {
+        for (int j = 0; j < (this.stateArr).length -1; j++) {
+          if (endArr[j] == startArr[j]) {
+            amntOutOfPlace += j - i;
+          }
+        }
       }
     }
     return amntOutOfPlace;
@@ -29,7 +34,7 @@ public byte[] getMoves(){
 	byte[] moves = {0,0,0,0};
 
 	int index = -1;
-	
+
 	for (int i = 0; (i < (this.stateArr).length) && (index == -1); i++) {
         if (this.stateArr[i] == 0) {
             index = i;
@@ -41,9 +46,9 @@ public byte[] getMoves(){
 	}
 	//east
 	if(index != 0 && index != 3 && index != 6){
-		moves[1] = (this.stateArr[index - 1]);	
+		moves[1] = (this.stateArr[index - 1]);
 	}
-	
+
 	//south
 	if(index > 2){
 		moves[2] = (this.stateArr[index - 3]);
@@ -53,6 +58,6 @@ public byte[] getMoves(){
 		moves[3] = (this.stateArr[index + 3]);
 	}
 	return moves;
-  } 
+  }
 
 }
