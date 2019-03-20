@@ -1,3 +1,6 @@
+import java.io.IOException;
+
+import javax.imageio.IIOException;
 import javax.swing.JOptionPane;
 
 public class Main {
@@ -10,31 +13,39 @@ public class Main {
 	static byte[] inputStateArr = new byte[9];
 	static byte[] finalStateArr = new byte[9];
 
-	public static void main(String[] args) {
+	public static void main(String[] args)  {
 		int height = 0;
 		boolean validStartState = false;
 		boolean validEndState = false;
-
-		while (!validStartState && !validEndState) {
+		
 			try {
-				if (!validStartState) {
+				while (!validStartState) {
 					String start = JOptionPane
 							.showInputDialog("Enter start state, 9 unique numbers from 0 to 8 seperated by a space");
-					validStartState = validateInput(start, inputStateArr);
+					if(start == null) {
+						JOptionPane.showMessageDialog(null, "Program terminated");
+						validStartState = true;
+						validEndState = true;
+					}
+					else
+						validStartState = validateInput(start, inputStateArr);
 				}
 
 				for (int j = 0; j < inputStateArr.length; j++) {
 					System.out.println(inputStateArr[j]);
 				}
-				if (!validEndState) {
+				while (!validEndState) {
 					String end = JOptionPane.showInputDialog(
 							"Enter end/final state, 9 unique numbers from 0 to 8 seperated by a space");
-					validEndState = validateInput(end, finalStateArr);
+					if(end == null) {
+						JOptionPane.showMessageDialog(null, "Program terminated");
+						validEndState = true;
+					} else
+						validEndState = validateInput(end, finalStateArr);
 				}
 			} catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
 				JOptionPane.showMessageDialog(null, "Incorrect input");
 			}
-		}
 
 		startState = new State(inputStateArr, height);
 		finalState = new State(finalStateArr, height);
@@ -66,9 +77,9 @@ public class Main {
 			}
 		}
 
-		if (input.matches(inputValidator) && !duplicate) {
+		if (input.matches(inputValidator) && !duplicate && input != null) {
 			valid = true;
-		} else {
+		} else{
 			JOptionPane.showMessageDialog(null, "Incorrect input");
 		}
 
