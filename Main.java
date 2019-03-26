@@ -1,6 +1,3 @@
-import java.io.IOException;
-
-import javax.imageio.IIOException;
 import javax.swing.JOptionPane;
 
 public class Main {
@@ -22,12 +19,6 @@ public class Main {
 				while (!validStartState) {
 					String start = JOptionPane
 							.showInputDialog("Enter start state, 9 unique numbers from 0 to 8 seperated by a space");
-					if(start == null) {
-						JOptionPane.showMessageDialog(null, "Program terminated");
-						validStartState = true;
-						validEndState = true;
-					}
-					else
 						validStartState = validateInput(start, inputStateArr);
 				}
 
@@ -37,14 +28,10 @@ public class Main {
 				while (!validEndState) {
 					String end = JOptionPane.showInputDialog(
 							"Enter end/final state, 9 unique numbers from 0 to 8 seperated by a space");
-					if(end == null) {
-						JOptionPane.showMessageDialog(null, "Program terminated");
-						validEndState = true;
-					} else
 						validEndState = validateInput(end, finalStateArr);
 				}
 			} catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-				JOptionPane.showMessageDialog(null, "Incorrect input");
+				JOptionPane.showMessageDialog(null, "Invalid input");
 			}
 
 		startState = new State(inputStateArr, height);
@@ -55,7 +42,7 @@ public class Main {
 									// better if we don't know the size
 		byte[] moves = startState.getMoves();
 		print(moves);
-		System.out.println(finalState.getHeur());
+		//System.out.println(getHeur(finalState));
 
 	}
 
@@ -80,7 +67,7 @@ public class Main {
 		if (input.matches(inputValidator) && !duplicate && input != null) {
 			valid = true;
 		} else{
-			JOptionPane.showMessageDialog(null, "Incorrect input");
+			JOptionPane.showMessageDialog(null, "Invalid input");
 		}
 
 		return valid;
