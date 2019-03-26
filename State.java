@@ -41,11 +41,12 @@ public byte[] getMoves(){
         }
     }
 	//west
-	if(index != 2 && index != 5 && index != 8 ){
+	if(index != 2 && index != 5 && index != 8){
 		moves[0] = (this.stateArr[index + 1]);
 	}
+	
 	//east
-	if(index != 0 && index != 3 && index != 6){
+	if(index != 0 && index != 3 && index != 6 ){
 		moves[1] = (this.stateArr[index - 1]);
 	}
 
@@ -59,5 +60,6 @@ public byte[] getMoves(){
 	}
 	return moves;
   }
-
+ 
+ 
 }
