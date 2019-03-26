@@ -63,6 +63,4 @@ public byte[] getMoves(){
 	}
 	return moves;
   }
- 
- 
 }
