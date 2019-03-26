@@ -14,38 +14,79 @@ public class Main {
 		int height = 0;
 		boolean validStartState = false;
 		boolean validEndState = false;
-		
-			try {
+		String start = "";
+		String end = "";
+
 				while (!validStartState) {
-					String start = JOptionPane
+					start = JOptionPane
 							.showInputDialog("Enter start state, 9 unique numbers from 0 to 8 seperated by a space");
-						validStartState = validateInput(start, inputStateArr);
+						validStartState = validateInput2(start);
 				}
 
-				for (int j = 0; j < inputStateArr.length; j++) {
+				// INIT START State
+				String[] tempArr1 = start.split("\\s+");
+				for (int i = 0; i < tempArr1.length; i++ ){
+					inputStateArr[i] = Byte.valueOf(tempArr1[i]);
+				}
+
+				// DEBUGGING PURPOSES
+				/*for (int j = 0; j < inputStateArr.length; j++) {
 					System.out.println(inputStateArr[j]);
-				}
+				}*/
+
 				while (!validEndState) {
-					String end = JOptionPane.showInputDialog(
+					end = JOptionPane.showInputDialog(
 							"Enter end/final state, 9 unique numbers from 0 to 8 seperated by a space");
-						validEndState = validateInput(end, finalStateArr);
+						validEndState = validateInput2(end);
 				}
-			} catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-				JOptionPane.showMessageDialog(null, "Invalid input");
-			}
+
+				// INIT START State
+				String[] tempArr2 = end.split("\\s+");
+				for (int i = 0; i < tempArr2.length; i++ ){
+					finalStateArr[i] = Byte.valueOf(tempArr2[i]);
+				}
+
+				// DEBUGGING PURPOSES
+				/*for (int j = 0; j < finalStateArr.length; j++) {
+					System.out.println(finalStateArr[j]);
+				}*/
 
 		startState = new State(inputStateArr, height);
 		finalState = new State(finalStateArr, height);
-		open = new State[999]; // What should this number be? Not sure but maybe an arraylist here would be
+		//open = new State[999]; // What should this number be? Not sure but may cancel button press but need to stop print out of moves be an arraylist here would be
 								// better if we don't know the size
-		closed = new State[999]; // What should this number be? Not sure but maybe an arraylist here would be
+		//closed = new State[999]; // What should this number be? Not sure but maybe an arraylist here would be
 									// better if we don't know the size
 		byte[] moves = startState.getMoves();
 		print(moves);
-		//System.out.println(getHeur(finalState));
+		System.out.println(startState.getHeur(finalState));
 
 	}
 
+	public static boolean validateInput2(String input) {
+		String regex = "([0-8]\\s){8}[0-8]{1}";
+		String[] inputArr = input.split("\\s+");
+		String found = "";
+		boolean isDuplicate = false;
+
+		if (inputArr.length == 9) { // Check length
+			if (input.matches(regex)) { // Check regex
+				for (int i = 0; i < inputArr.length && !isDuplicate; i++) { // Check duplicate values
+					if (!(found.contains(inputArr[i]))) {
+						found += inputArr[i];
+					} else {
+						isDuplicate = true;
+					}
+				}
+				if (!isDuplicate) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	// UNUSED
 	public static boolean validateInput(String input, byte[] stateArr) {
 		boolean valid = false;
 		boolean duplicate = false;
@@ -69,18 +110,17 @@ public class Main {
 		} else{
 			JOptionPane.showMessageDialog(null, "Invalid input");
 		}
-
 		return valid;
 	}
-	
+
 	public static void print(byte[] moves){
 		String[] directions = {"West","East","South","North"};
-		
+
 		for(int i = 0; i < directions.length; i++){
 			if(moves[i] > 0){
 				System.out.println(moves[i] + " to the " + directions[i]);
 			}
-		}  
+		}
   }
 
 }

@@ -17,9 +17,9 @@ public class State {
     byte[] startArr = this.stateArr;
     byte[] endArr = endState.stateArr;
 
-    for (int i = 0; i < (this.stateArr).length - 1; i++) {
+    for (int i = 0; i < (this.stateArr).length; i++) {
       if (endArr[i] != startArr[i]) {
-        for (int j = 0; j < (this.stateArr).length -1; j++) {
+        for (int j = 0; j < (this.stateArr).length; j++) {
           if (endArr[j] == startArr[j]) {
             amntOutOfPlace += j - i;
           }
