@@ -1,3 +1,5 @@
+import java.lang.*;
+
 public class State {
 
   byte[] stateArr;
@@ -18,10 +20,11 @@ public class State {
     byte[] endArr = endState.stateArr;
 
     for (int i = 0; i < (this.stateArr).length; i++) {
-      if (endArr[i] != startArr[i]) {
+      if (startArr[i] != endArr[i]) {
         for (int j = 0; j < (this.stateArr).length; j++) {
-          if (endArr[j] == startArr[j]) {
-            amntOutOfPlace += j - i;
+          if (endArr[j] == startArr[i]) {
+            //System.out.println("j: " + j + " i: " + i);
+            amntOutOfPlace += Math.abs(j - i);
           }
         }
       }
