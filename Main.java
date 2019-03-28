@@ -1,4 +1,6 @@
 import javax.swing.JOptionPane;
+import java.util.*;
+
 
 public class Main {
 
@@ -61,6 +63,8 @@ public class Main {
 		//open = new State[999]; 
 		//closed = new State[999]; 
 		byte[] moves = startState.getMoves();
+		ArrayList<State> list = new ArrayList<State>();
+		list = startState.getStates(moves);
 		print(moves);
 		System.out.println(startState.getHeur(finalState));
 
