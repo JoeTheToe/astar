@@ -74,7 +74,7 @@ public ArrayList<State> getStates(byte[] arr){
 	int ctr = 0;
 	
 	ArrayList<State> list = new ArrayList<State>();
-	State[] states = new State[ctr];
+
 	for(int j = 0; j < 4; j++){
 		
 		
