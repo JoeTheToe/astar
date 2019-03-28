@@ -1,6 +1,5 @@
 import java.util.*;
 
-
 public class State {
 
   byte[] stateArr;
@@ -36,7 +35,6 @@ public class State {
 public byte[] getMoves(){
 	// West, East, South, North
 	byte[] moves = {0,0,0,0};
-	int ctr = 0;
 	int index = -1;
 
 	for (int i = 0; (i < (this.stateArr).length) && (index == -1); i++) {
@@ -71,14 +69,11 @@ public byte[] getMoves(){
   }
   
 public ArrayList<State> getStates(byte[] arr){
-	int ctr = 0;
-	
+
 	ArrayList<State> list = new ArrayList<State>();
 
 	for(int j = 0; j < 4; j++){
-		
-		
-		
+
 		if(arr[j] > 0){
 			int cnt1 = 0;
 			int cnt2 = 0;
@@ -97,7 +92,6 @@ public ArrayList<State> getStates(byte[] arr){
 			for (int m = 0; m < ((this.stateArr).length); m++){
 				if (this.stateArr[m] == arr[j]){
 					cnt2 = m;
-
 				}
 			}
 			
@@ -107,7 +101,6 @@ public ArrayList<State> getStates(byte[] arr){
 			State nextState = new State(newState, 1);
 			list.add(nextState);
 		}
-		
 	}
 	return list;
 }
