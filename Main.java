@@ -16,11 +16,13 @@ public class Main {
 		boolean validEndState = false;
 		String start = "";
 		String end = "";
+		
+		try {
 
 				while (!validStartState) {
 					start = JOptionPane
-							.showInputDialog("Enter start state, 9 unique numbers from 0 to 8 seperated by a space");
-						validStartState = validateInput2(start);
+							.showInputDialog("Enter start state, 9 unique numbers from 0 to 8 seperated by a space"); 
+						validStartState = validateInput(start);
 				}
 
 				// INIT START State
@@ -37,14 +39,17 @@ public class Main {
 				while (!validEndState) {
 					end = JOptionPane.showInputDialog(
 							"Enter end/final state, 9 unique numbers from 0 to 8 seperated by a space");
-						validEndState = validateInput2(end);
+						validEndState = validateInput(end);
 				}
 
-				// INIT START State
+				// INIT END State
 				String[] tempArr2 = end.split("\\s+");
 				for (int i = 0; i < tempArr2.length; i++ ){
 					finalStateArr[i] = Byte.valueOf(tempArr2[i]);
 				}
+		} catch(NullPointerException e) {
+			JOptionPane.showMessageDialog(null, "Program terminated");;
+		}
 
 				// DEBUGGING PURPOSES
 				/*for (int j = 0; j < finalStateArr.length; j++) {
@@ -53,24 +58,22 @@ public class Main {
 
 		startState = new State(inputStateArr, height);
 		finalState = new State(finalStateArr, height);
-		//open = new State[999]; // What should this number be? Not sure but may cancel button press but need to stop print out of moves be an arraylist here would be
-								// better if we don't know the size
-		//closed = new State[999]; // What should this number be? Not sure but maybe an arraylist here would be
-									// better if we don't know the size
+		//open = new State[999]; 
+		//closed = new State[999]; 
 		byte[] moves = startState.getMoves();
 		print(moves);
 		System.out.println(startState.getHeur(finalState));
 
 	}
 
-	public static boolean validateInput2(String input) {
+	public static boolean validateInput(String input) {
 		String regex = "([0-8]\\s){8}[0-8]{1}";
 		String[] inputArr = input.split("\\s+");
 		String found = "";
 		boolean isDuplicate = false;
 
-		if (inputArr.length == 9) { // Check length
-			if (input.matches(regex)) { // Check regex
+		if (inputArr.length == 9) { 
+			if (input.matches(regex)) { 
 				for (int i = 0; i < inputArr.length && !isDuplicate; i++) { // Check duplicate values
 					if (!(found.contains(inputArr[i]))) {
 						found += inputArr[i];
@@ -84,33 +87,6 @@ public class Main {
 			}
 		}
 		return false;
-	}
-
-	// UNUSED
-	public static boolean validateInput(String input, byte[] stateArr) {
-		boolean valid = false;
-		boolean duplicate = false;
-		String inputValidator = "([0-8]\\s){8}[0-8]{1}";
-
-		String[] inputArr = input.split("\\s+");
-
-		for (int i = 0; i < inputArr.length; i++) {
-			stateArr[i] = Byte.parseByte(inputArr[i]);
-		}
-
-		for (int j = 0; j < stateArr.length && !duplicate; j++) {
-			for (int k = j + 1; k < stateArr.length && !duplicate; k++) {
-				if (stateArr[j] == stateArr[k])
-					duplicate = true;
-			}
-		}
-
-		if (input.matches(inputValidator) && !duplicate && input != null) {
-			valid = true;
-		} else{
-			JOptionPane.showMessageDialog(null, "Invalid input");
-		}
-		return valid;
 	}
 
 	public static void print(byte[] moves){
