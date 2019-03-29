@@ -1,5 +1,6 @@
 import javax.swing.JOptionPane;
-import java.util.ArrayList;
+import java.util.*;
+
 
 public class Main {
 
@@ -17,12 +18,12 @@ public class Main {
 		boolean validEndState = false;
 		String start = "";
 		String end = "";
-
+		
 		try {
 
 				while (!validStartState) {
 					start = JOptionPane
-							.showInputDialog("Enter start state, 9 unique numbers from 0 to 8 seperated by a space");
+							.showInputDialog("Enter start state, 9 unique numbers from 0 to 8 seperated by a space"); 
 						validStartState = validateInput(start);
 				}
 
@@ -59,11 +60,18 @@ public class Main {
 
 		startState = new State(inputStateArr, height);
 		finalState = new State(finalStateArr, height);
-		//open = new State[999];
-		//closed = new State[999];
+		//open = new State[999]; 
+		//closed = new State[999]; 
 		byte[] moves = startState.getMoves();
+		ArrayList<State> list = new ArrayList<State>();
+		list = startState.getStates(moves);
 		print(moves);
-		System.out.println(startState.getHeur(finalState));
+		
+		for(int j = 0; j < list.size(); j++){
+			System.out.println(list.get(j).getHeur(finalState));
+		}
+		
+		//System.out.println(startState.getHeur(finalState));
 
 	}
 
@@ -73,8 +81,8 @@ public class Main {
 		String found = "";
 		boolean isDuplicate = false;
 
-		if (inputArr.length == 9) {
-			if (input.matches(regex)) {
+		if (inputArr.length == 9) { 
+			if (input.matches(regex)) { 
 				for (int i = 0; i < inputArr.length && !isDuplicate; i++) { // Check duplicate values
 					if (!(found.contains(inputArr[i]))) {
 						found += inputArr[i];
