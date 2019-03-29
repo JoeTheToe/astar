@@ -66,7 +66,12 @@ public class Main {
 		ArrayList<State> list = new ArrayList<State>();
 		list = startState.getStates(moves);
 		print(moves);
-		System.out.println(startState.getHeur(finalState));
+		
+		for(int j = 0; j < list.size(); j++){
+			System.out.println(list.get(j).getHeur(finalState));
+		}
+		
+		//System.out.println(startState.getHeur(finalState));
 
 	}
 
