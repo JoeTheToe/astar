@@ -4,14 +4,25 @@ public class State {
 
   byte[] stateArr;
   int height;
+  State ancestor;
 
   public State (byte[] arr, int height) {
     this.stateArr = arr;
     this.height = height;
   }
 
+  public State (byte[] arr, int height, State ancestor) {
+    this.stateArr = arr;
+    this.height = height;
+    this.ancestor = ancestor;
+  }
+
   public int getHeight() {
     return this.height;
+  }
+
+  public State getAncestor() {
+    return this.ancestor;
   }
 
   public int getHeur(State endState) {

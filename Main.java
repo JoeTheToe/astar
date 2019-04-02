@@ -1,3 +1,7 @@
+// Joseph Tobin - 16163842
+// Neale Conway - 16192206
+// John Long - 12132306
+
 import javax.swing.JOptionPane;
 import java.util.*;
 
@@ -7,8 +11,8 @@ public class Main {
 	static byte size = 8;
 	static State finalState;
 	static State startState;
-	static State[] open;
-	static State[] closed;
+	static ArrayList<State> open;
+	static ArrayList<State> closed;
 	static byte[] inputStateArr = new byte[9];
 	static byte[] finalStateArr = new byte[9];
 
@@ -62,9 +66,34 @@ public class Main {
 
 		startState = new State(inputStateArr, height);
 		finalState = new State(finalStateArr, height);
-		//open = new State[999];
-		//closed = new State[999];
-		byte[] moves = startState.getMoves();
+		open = new ArrayList<State>();
+		closed = new ArrayList<State>();
+
+		open.add(startState);
+
+		while (open.length != 0) { // while open is not empty
+			State current = open.get(0); // get leftmost which should be best heuristic value
+			if (current == finalState) { break; } // when final state reached
+
+			open.remove(0);// remove current from open list
+			closed.add(current); // add current to the closed list
+
+			byte[] moves = current.getMoves();
+			ArrayList<State> list = new ArrayList<State>();
+			list = current.getStates(moves); // generate children
+
+
+			for (int i = 0; i < list.length; i++) { // for each child do ...
+				if () { // if child is not on closed
+					// add to open list
+					// calculate heuristic...
+					// .....
+				}
+			}
+
+
+		}
+		/*byte[] moves = startState.getMoves();
 		ArrayList<State> list = new ArrayList<State>();
 		list = startState.getStates(moves);
 		if (validEndState && validStartState) {
@@ -73,7 +102,7 @@ public class Main {
 		for(int j = 0; j < list.size(); j++){
 			System.out.println(list.get(j).getHeur(finalState));
 		}
-		}
+	}*/
 
 		//System.out.println(startState.getHeur(finalState));
 
