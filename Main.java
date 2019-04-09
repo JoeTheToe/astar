@@ -68,6 +68,7 @@ public class Main {
 		finalState = new State(finalStateArr, 0);
 		open = new ArrayList<State>();
 		closed = new ArrayList<State>();
+		ArrayList<State> pathTaken = new ArrayList<State>();
 
 		open.add(startState);
 
@@ -81,7 +82,7 @@ public class Main {
 			closed.add(current);
 
 			if (current.getArr() == finalState.getArr()) { // when final state reached, backtrack and return path
-				returnPath(current);
+				returnPath(current, closed);
 				break;
 			}
 
@@ -106,6 +107,16 @@ public class Main {
 				open.add(list.get(i));
 
 				// re order open list in heuristic value order
+				Collections.sort(open, new Comparator<State>() {
+				    @Override
+				    public int compare(State s1, State s2) {
+				        if (s1.getHeur(finalState) > s2.getHeur(finalState))
+				            return 1;
+				        if (s1.getHeur(finalState) < s2.getHeur(finalState))
+				            return -1;
+				        return 0;
+				    }
+				});
 			}
 			
 		/*byte[] moves = startState.getMoves();
@@ -123,6 +134,13 @@ public class Main {
 
 		}
 	}
+	
+	public static void returnPath(State current, ArrayList<State> closed) {
+		boolean ancestors = true;
+		while(ancestors) {
+			
+		}
+}
 
 	public static boolean validateInput(String input) {
 		String regex = "([0-8]\\s){8}[0-8]{1}";
