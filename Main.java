@@ -17,7 +17,7 @@ public class Main {
 	static byte[] finalStateArr = new byte[9];
 
 	public static void main(String[] args)  {
-		int height = 0;
+		int height = -1;
 		boolean validStartState = false;
 		boolean validEndState = false;
 		String start = "";
@@ -64,35 +64,50 @@ public class Main {
 
 		// MAIN GAME LOOP WILL BE IMPLEMENTED BELOW, FOR NOW IT JUST SHOWS THE FIRST MOVE
 
-		startState = new State(inputStateArr, height);
-		finalState = new State(finalStateArr, height);
+		startState = new State(inputStateArr, 0);
+		finalState = new State(finalStateArr, 0);
 		open = new ArrayList<State>();
 		closed = new ArrayList<State>();
 
 		open.add(startState);
 
-		while (open.length != 0) { // while open is not empty
-			State current = open.get(0); // get leftmost which should be best heuristic value
-			if (current == finalState) { break; } // when final state reached
+		while (open.size() != 0) {
+			height++;
+			// find the node on the open list with the lowest f value, call it current
+			State current = open.get(0); // assuming leftmost is the best heuristic value
 
-			open.remove(0);// remove current from open list
-			closed.add(current); // add current to the closed list
+			// remove from the open list and add to closed
+			open.remove(0);
+			closed.add(current);
 
-			byte[] moves = current.getMoves();
-			ArrayList<State> list = new ArrayList<State>();
-			list = current.getStates(moves); // generate children
-
-
-			for (int i = 0; i < list.length; i++) { // for each child do ...
-				if () { // if child is not on closed
-					// add to open list
-					// calculate heuristic...
-					// .....
-				}
+			if (current.getArr() == finalState.getArr()) { // when final state reached, backtrack and return path
+				returnPath(current);
+				break;
 			}
 
+			// generate children
+			byte[] moves = current.getMoves();
+			ArrayList<State> list = new ArrayList<State>();
+			list = current.getStates(moves, height, current); // generate children
 
-		}
+			// for each successor
+			for (int i = 0; i < list.size(); i++) {
+				if (closed.contains(list.get(i))) { // if successor is already evaluated ignore
+					continue;
+				}
+
+				int tempG = current.getHeight() + (list.get(i).getHeight() - current.getHeight()); // + distance between successor and current
+
+				if (open.contains(list.get(i))) {
+					if (tempG > list.get(i).getHeight()) {
+						continue;
+					}
+				}
+				open.add(list.get(i));
+
+				// re order open list in heuristic value order
+			}
+			
 		/*byte[] moves = startState.getMoves();
 		ArrayList<State> list = new ArrayList<State>();
 		list = startState.getStates(moves);
@@ -106,6 +121,7 @@ public class Main {
 
 		//System.out.println(startState.getHeur(finalState));
 
+		}
 	}
 
 	public static boolean validateInput(String input) {

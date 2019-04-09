@@ -17,6 +17,10 @@ public class State {
     this.ancestor = ancestor;
   }
 
+  public byte[] getArr() {
+    return this.stateArr;
+  }
+
   public int getHeight() {
     return this.height;
   }
@@ -79,7 +83,7 @@ public byte[] getMoves(){
 
   }
 
-public ArrayList<State> getStates(byte[] arr){
+public ArrayList<State> getStates(byte[] arr, int height, State ancestor){
 
 	ArrayList<State> list = new ArrayList<State>();
 
@@ -109,7 +113,7 @@ public ArrayList<State> getStates(byte[] arr){
 			newState[cnt1] = this.stateArr[cnt2];
 			newState[cnt2] = this.stateArr[cnt1];
 
-			State nextState = new State(newState, 1);
+			State nextState = new State(newState, height, ancestor);
 			list.add(nextState);
 		}
 	}
