@@ -1,10 +1,10 @@
+
 // Joseph Tobin - 16163842
 // Neale Conway - 16192206
 // John Long - 12132306
 
 import javax.swing.JOptionPane;
 import java.util.*;
-
 
 public class Main {
 
@@ -16,7 +16,7 @@ public class Main {
 	static byte[] inputStateArr = new byte[9];
 	static byte[] finalStateArr = new byte[9];
 
-	public static void main(String[] args)  {
+	public static void main(String[] args) {
 		int height = -1;
 		boolean validStartState = false;
 		boolean validEndState = false;
@@ -25,50 +25,53 @@ public class Main {
 
 		try {
 
-				while (!validStartState) {
-					start = JOptionPane
-							.showInputDialog("Enter start state, 9 unique numbers from 0 to 8 seperated by a space");
-						validStartState = validateInput(start);
-				}
+			while (!validStartState) {
+				start = JOptionPane
+						.showInputDialog("Enter start state, 9 unique numbers from 0 to 8 seperated by a space");
+				validStartState = validateInput(start);
+			}
 
-				// INIT START State
-				String[] tempArr1 = start.split("\\s+");
-				for (int i = 0; i < tempArr1.length; i++ ){
-					inputStateArr[i] = Byte.valueOf(tempArr1[i]);
-				}
+			// INIT START State
+			String[] tempArr1 = start.split("\\s+");
+			for (int i = 0; i < tempArr1.length; i++) {
+				inputStateArr[i] = Byte.valueOf(tempArr1[i]);
+			}
 
-				// DEBUGGING PURPOSES
-				/*for (int j = 0; j < inputStateArr.length; j++) {
-					System.out.println(inputStateArr[j]);
-				}*/
+			// DEBUGGING PURPOSES
+			/*
+			 * for (int j = 0; j < inputStateArr.length; j++) {
+			 * System.out.println(inputStateArr[j]); }
+			 */
 
-				while (!validEndState) {
-					end = JOptionPane.showInputDialog(
-							"Enter end/final state, 9 unique numbers from 0 to 8 seperated by a space");
-						validEndState = validateInput(end);
-				}
+			while (!validEndState) {
+				end = JOptionPane
+						.showInputDialog("Enter end/final state, 9 unique numbers from 0 to 8 seperated by a space");
+				validEndState = validateInput(end);
+			}
 
-				// INIT END State
-				String[] tempArr2 = end.split("\\s+");
-				for (int i = 0; i < tempArr2.length; i++ ){
-					finalStateArr[i] = Byte.valueOf(tempArr2[i]);
-				}
-		} catch(NullPointerException e) {
-			JOptionPane.showMessageDialog(null, "Program terminated");;
+			// INIT END State
+			String[] tempArr2 = end.split("\\s+");
+			for (int i = 0; i < tempArr2.length; i++) {
+				finalStateArr[i] = Byte.valueOf(tempArr2[i]);
+			}
+		} catch (NullPointerException e) {
+			JOptionPane.showMessageDialog(null, "Program terminated");
+			;
 		}
 
-				// DEBUGGING PURPOSES
-				/*for (int j = 0; j < finalStateArr.length; j++) {
-					System.out.println(finalStateArr[j]);
-				}*/
+		// DEBUGGING PURPOSES
+		/*
+		 * for (int j = 0; j < finalStateArr.length; j++) {
+		 * System.out.println(finalStateArr[j]); }
+		 */
 
-		// MAIN GAME LOOP WILL BE IMPLEMENTED BELOW, FOR NOW IT JUST SHOWS THE FIRST MOVE
+		// MAIN GAME LOOP WILL BE IMPLEMENTED BELOW, FOR NOW IT JUST SHOWS THE FIRST
+		// MOVE
 
 		startState = new State(inputStateArr, 0);
 		finalState = new State(finalStateArr, 0);
 		open = new ArrayList<State>();
 		closed = new ArrayList<State>();
-		ArrayList<State> pathTaken = new ArrayList<State>();
 
 		open.add(startState);
 
@@ -97,7 +100,9 @@ public class Main {
 					continue;
 				}
 
-				int tempG = current.getHeight() + (list.get(i).getHeight() - current.getHeight()); // + distance between successor and current
+				int tempG = current.getHeight() + (list.get(i).getHeight() - current.getHeight()); // + distance between
+																									// successor and
+																									// current
 
 				if (open.contains(list.get(i))) {
 					if (tempG > list.get(i).getHeight()) {
@@ -108,38 +113,40 @@ public class Main {
 
 				// re order open list in heuristic value order
 				Collections.sort(open, new Comparator<State>() {
-				    @Override
-				    public int compare(State s1, State s2) {
-				        if (s1.getHeur(finalState) > s2.getHeur(finalState))
-				            return 1;
-				        if (s1.getHeur(finalState) < s2.getHeur(finalState))
-				            return -1;
-				        return 0;
-				    }
+					@Override
+					public int compare(State s1, State s2) {
+						if (s1.getHeur(finalState) > s2.getHeur(finalState))
+							return 1;
+						if (s1.getHeur(finalState) < s2.getHeur(finalState))
+							return -1;
+						return 0;
+					}
 				});
 			}
-			
-		/*byte[] moves = startState.getMoves();
-		ArrayList<State> list = new ArrayList<State>();
-		list = startState.getStates(moves);
-		if (validEndState && validStartState) {
-		print(moves);
 
-		for(int j = 0; j < list.size(); j++){
-			System.out.println(list.get(j).getHeur(finalState));
-		}
-	}*/
+			/*
+			 * byte[] moves = startState.getMoves(); ArrayList<State> list = new
+			 * ArrayList<State>(); list = startState.getStates(moves); if (validEndState &&
+			 * validStartState) { print(moves);
+			 * 
+			 * for(int j = 0; j < list.size(); j++){
+			 * System.out.println(list.get(j).getHeur(finalState)); } }
+			 */
 
-		//System.out.println(startState.getHeur(finalState));
+			// System.out.println(startState.getHeur(finalState));
 
 		}
 	}
-	
+
 	public static void returnPath(State current, ArrayList<State> closed) {
-		boolean ancestors = true;
-		while(ancestors) {
-			
-		}
+		for(int j = 0; j < closed.size(); j++) {
+			for(int k = 0; k < closed.get(j).getArr().length; k++) {
+				System.out.print(closed.get(j).getArr()[k] + " ");
+				System.out.print(closed.get(j).getArr()[k+1] + " ");
+				System.out.println(closed.get(j).getArr()[k+2]);
+			}
+			System.out.println();
+		} 
 }
 
 	public static boolean validateInput(String input) {
@@ -154,8 +161,7 @@ public class Main {
 					if (!(found.contains(inputArr[i]))) {
 						found += inputArr[i];
 					} else {
-						JOptionPane.showMessageDialog(
-			        null, "Duplicates found", "Error", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Duplicates found", "Error", JOptionPane.ERROR_MESSAGE);
 						isDuplicate = true;
 					}
 				}
@@ -163,24 +169,23 @@ public class Main {
 					return true;
 				}
 			} else {
-				JOptionPane.showMessageDialog(
-	        null, "Input must be numbers in the range 0-8, space separated", "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Input must be numbers in the range 0-8, space separated", "Error",
+						JOptionPane.ERROR_MESSAGE);
 			}
 		} else {
-			JOptionPane.showMessageDialog(
-        null, "Input must be 9 numbers", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Input must be 9 numbers", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		return false;
 	}
 
-	public static void print(byte[] moves){
-		String[] directions = {"West","East","South","North"};
+	public static void print(byte[] moves) {
+		String[] directions = { "West", "East", "South", "North" };
 
-		for(int i = 0; i < directions.length; i++){
-			if(moves[i] > 0){
+		for (int i = 0; i < directions.length; i++) {
+			if (moves[i] > 0) {
 				System.out.println(moves[i] + " to the " + directions[i]);
 			}
 		}
-  }
+	}
 
 }
