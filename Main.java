@@ -56,7 +56,6 @@ public class Main {
 			}
 		} catch (NullPointerException e) {
 			JOptionPane.showMessageDialog(null, "Program terminated");
-			;
 		}
 
 		// DEBUGGING PURPOSES
@@ -76,16 +75,24 @@ public class Main {
 		open.add(startState);
 
 		while (open.size() != 0) {
-			height++;
+
 			// find the node on the open list with the lowest f value, call it current
 			State current = open.get(0); // assuming leftmost is the best heuristic value
+
+			if (open.size() == 1) { // first iteration, therefore no ancestor so height is 0;
+				height = 0;
+			} else {
+				height = (current.getAncestor()).getHeight() + 1;
+			}
 
 			// remove from the open list and add to closed
 			open.remove(0);
 			closed.add(current);
 
-			if (current.getArr() == finalState.getArr()) { // when final state reached, backtrack and return path
-				returnPath(current, closed);
+			if (Arrays.equals(current.getArr(), finalState.getArr())) {
+				System.out.println("final state reached");
+				//returnPath(current, closed);
+				returnPath2(current);
 				break;
 			}
 
@@ -95,7 +102,14 @@ public class Main {
 			list = current.getStates(moves, height, current); // generate children
 
 			// for each successor
-			for (int i = 0; i < list.size(); i++) {
+			main: for (int i = 0; i < list.size(); i++) {
+
+				for (int j = 0; j < closed.size(); j++) { // VERSION 2 OF BELOW
+					if (Arrays.equals((closed.get(j).getArr()),(list.get(i).getArr()))) {
+						continue main;
+					}
+				}
+
 				if (closed.contains(list.get(i))) { // if successor is already evaluated ignore
 					continue;
 				}
@@ -103,6 +117,12 @@ public class Main {
 				int tempG = current.getHeight() + (list.get(i).getHeight() - current.getHeight()); // + distance between
 																									// successor and
 																									// current
+
+			  for (int j = 0; j < open.size(); j++) { // VERSION 2 OF BELOW
+						if (Arrays.equals((open.get(j).getArr()),(list.get(i).getArr()))) {
+							continue main;
+						}
+					}
 
 				if (open.contains(list.get(i))) {
 					if (tempG > list.get(i).getHeight()) {
@@ -115,20 +135,32 @@ public class Main {
 				Collections.sort(open, new Comparator<State>() {
 					@Override
 					public int compare(State s1, State s2) {
-						if (s1.getHeur(finalState) > s2.getHeur(finalState))
+						if (s1.getF(finalState) > s2.getF(finalState))
 							return 1;
-						if (s1.getHeur(finalState) < s2.getHeur(finalState))
+						if (s1.getF(finalState) < s2.getF(finalState))
 							return -1;
 						return 0;
 					}
 				});
+
+				System.out.println("start of closed list");
+				printList(closed);
+				System.out.println("end of closed list");
+
+				/*if (height > 1) {
+				System.out.println((open.get(0)).getF(finalState));
+				System.out.println((open.get(1)).getF(finalState));
+				System.out.println("--");
+			}*/
+
+
 			}
 
 			/*
 			 * byte[] moves = startState.getMoves(); ArrayList<State> list = new
 			 * ArrayList<State>(); list = startState.getStates(moves); if (validEndState &&
 			 * validStartState) { print(moves);
-			 * 
+			 *
 			 * for(int j = 0; j < list.size(); j++){
 			 * System.out.println(list.get(j).getHeur(finalState)); } }
 			 */
@@ -146,8 +178,27 @@ public class Main {
 				System.out.println(closed.get(j).getArr()[k+2]);
 			}
 			System.out.println();
-		} 
-}
+		}
+	}
+
+	public static void printList(ArrayList<State> list) {
+		for (int i = 0; i < list.size(); i++) {
+			System.out.println(Arrays.toString(list.get(i).getArr()));
+		}
+	}
+
+	public static void returnPath2(State current) {
+		System.out.println(Arrays.toString(current.getArr()));
+		while (true) {
+			try {
+				State newCurrent = current.getAncestor();
+				System.out.println(Arrays.toString(newCurrent.getArr()));
+				current = newCurrent;
+			} catch (NullPointerException e) {
+				break;
+			}
+		}
+	}
 
 	public static boolean validateInput(String input) {
 		String regex = "([0-8]\\s){8}[0-8]{1}";

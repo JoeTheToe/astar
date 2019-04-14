@@ -38,6 +38,7 @@ public class State {
       if (startArr[i] != endArr[i]) {
         for (int j = 0; j < (this.stateArr).length; j++) {
           if ((endArr[j] == startArr[i]) && (endArr[j] != 0 && startArr[i] != 0)) {
+
             //System.out.println("j: " + j + " i: " + i);
             amntOutOfPlace += Math.abs(j - i);
           }
@@ -45,6 +46,10 @@ public class State {
       }
     }
     return amntOutOfPlace;
+  }
+
+  public int getF(State endState) {
+    return this.getHeur(endState) + this.getHeight();
   }
 
 public byte[] getMoves(){
