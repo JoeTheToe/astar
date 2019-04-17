@@ -92,7 +92,10 @@ public class Main {
 			if (Arrays.equals(current.getArr(), finalState.getArr())) {
 				System.out.println("final state reached");
 				//returnPath(current, closed);
-				returnPath2(current);
+				//returnPath2(current);
+				System.out.println("start of closed list");
+				printList2(closed);
+				System.out.println("end of closed list");
 				break;
 			}
 
@@ -143,9 +146,7 @@ public class Main {
 					}
 				});
 
-				System.out.println("start of closed list");
-				printList(closed);
-				System.out.println("end of closed list");
+				
 
 				/*if (height > 1) {
 				System.out.println((open.get(0)).getF(finalState));
@@ -155,6 +156,7 @@ public class Main {
 
 
 			}
+			
 
 			/*
 			 * byte[] moves = startState.getMoves(); ArrayList<State> list = new
@@ -168,6 +170,7 @@ public class Main {
 			// System.out.println(startState.getHeur(finalState));
 
 		}
+	
 	}
 
 	public static void returnPath(State current, ArrayList<State> closed) {
@@ -186,6 +189,18 @@ public class Main {
 			System.out.println(Arrays.toString(list.get(i).getArr()));
 		}
 	}
+	
+	public static void printList2(ArrayList<State> list) {
+		for (int i = 0; i < list.size(); i++) {
+			byte[] arr = list.get(i).getArr();
+			for(int j=0; j < arr.length; j+=3) {
+				System.out.print(arr[j]+" ");
+				System.out.print(arr[j+1]+" ");
+				System.out.println(arr[j+2]);
+			}
+			System.out.println();
+		}
+	}
 
 	public static void returnPath2(State current) {
 		System.out.println(Arrays.toString(current.getArr()));
@@ -198,6 +213,7 @@ public class Main {
 				break;
 			}
 		}
+		
 	}
 
 	public static boolean validateInput(String input) {
