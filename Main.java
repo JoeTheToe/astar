@@ -37,11 +37,6 @@ public class Main {
 				inputStateArr[i] = Byte.valueOf(tempArr1[i]);
 			}
 
-			// DEBUGGING PURPOSES
-			/*
-			 * for (int j = 0; j < inputStateArr.length; j++) {
-			 * System.out.println(inputStateArr[j]); }
-			 */
 
 			while (!validEndState) {
 				end = JOptionPane
@@ -56,16 +51,8 @@ public class Main {
 			}
 		} catch (NullPointerException e) {
 			JOptionPane.showMessageDialog(null, "Program terminated");
+			return;
 		}
-
-		// DEBUGGING PURPOSES
-		/*
-		 * for (int j = 0; j < finalStateArr.length; j++) {
-		 * System.out.println(finalStateArr[j]); }
-		 */
-
-		// MAIN GAME LOOP WILL BE IMPLEMENTED BELOW, FOR NOW IT JUST SHOWS THE FIRST
-		// MOVE
 
 		startState = new State(inputStateArr, 0);
 		finalState = new State(finalStateArr, 0);
@@ -90,8 +77,6 @@ public class Main {
 			closed.add(current);
 
 			if (Arrays.equals(current.getArr(), finalState.getArr())) {
-				System.out.println("final state reached");
-				//returnPath(current, closed);
 				returnPath2(current);
 				break;
 			}
@@ -142,42 +127,8 @@ public class Main {
 						return 0;
 					}
 				});
-
-				System.out.println("start of closed list");
-				printList(closed);
-				System.out.println("end of closed list");
-
-				/*if (height > 1) {
-				System.out.println((open.get(0)).getF(finalState));
-				System.out.println((open.get(1)).getF(finalState));
-				System.out.println("--");
-			}*/
-
-
 			}
 
-			/*
-			 * byte[] moves = startState.getMoves(); ArrayList<State> list = new
-			 * ArrayList<State>(); list = startState.getStates(moves); if (validEndState &&
-			 * validStartState) { print(moves);
-			 *
-			 * for(int j = 0; j < list.size(); j++){
-			 * System.out.println(list.get(j).getHeur(finalState)); } }
-			 */
-
-			// System.out.println(startState.getHeur(finalState));
-
-		}
-	}
-
-	public static void returnPath(State current, ArrayList<State> closed) {
-		for(int j = 0; j < closed.size(); j++) {
-			for(int k = 0; k < closed.get(j).getArr().length; k++) {
-				System.out.print(closed.get(j).getArr()[k] + " ");
-				System.out.print(closed.get(j).getArr()[k+1] + " ");
-				System.out.println(closed.get(j).getArr()[k+2]);
-			}
-			System.out.println();
 		}
 	}
 
@@ -188,13 +139,32 @@ public class Main {
 	}
 
 	public static void returnPath2(State current) {
-		System.out.println(Arrays.toString(current.getArr()));
+		String s1 = Arrays.toString(current.getArr());
+		String s2 = "";
+		for (int i = 1; i < 27; i+=3) {
+			if (i != 7 && i != 16) {
+				s2+= s1.charAt(i) + " ";
+			} else {
+				s2+= s1.charAt(i) + "\n";
+			}
+		} s2+= "\n";
+
 		while (true) {
 			try {
 				State newCurrent = current.getAncestor();
-				System.out.println(Arrays.toString(newCurrent.getArr()));
+				String s3 = Arrays.toString(newCurrent.getArr());
+				for (int i = 1; i < 27; i+=3) {
+					if (i != 7 && i != 16) {
+						s2+= s3.charAt(i) + " ";
+					} else {
+						s2+= s3.charAt(i) + "\n";
+					}
+				} s2+= "\n";
 				current = newCurrent;
 			} catch (NullPointerException e) {
+				for (int i = s2.length(); i >= 1; i-=19) {
+					System.out.println(s2.substring(i-19,i));
+				}
 				break;
 			}
 		}
